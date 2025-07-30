@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart | Dumb & Dripper</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="cart.css" />
+</head>
+<body>
+  <header class="cart-nav">
+    <a href="index.html" class="logo">
+      <img src="images/dd.jpg" alt="Logo" />
+      <span>Dumb & Dripper</span>
+    </a>
+    <a href="shop.html" class="back-to-shop"><i class="ri-arrow-left-line"></i> Continue Shopping</a>
+  </header>
+
+  <main class="cart-container">
+    <h2>Your Shopping Bag</h2>
+    <div class="cart-items" id="cartItemsContainer"></div>
+    <div class="cart-summary" id="cartSummary">
+      <h3>Cart Summary</h3>
+      <p><strong>Total:</strong> ₹<span id="cartTotal">0</span></p>
+      <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </main>
+
+  <script>
+    const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItemsContainer = document.getElementById("cartItemsContainer");
+    const cartTotalDisplay = document.getElementById("cartTotal");
+
+    function renderCart() {
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+
+      if (cartData.length === 0) {
+        cartItemsContainer.innerHTML = "<p class='empty-cart'>Your cart is currently empty.</p>";
+        document.getElementById("cartSummary").style.display = "none";
+        return;
+      }
+
+      cartData.forEach((item, index) => {
+        const priceNum = parseInt(item.price.replace("₹", ""));
+        total += priceNum;
+
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <img src="${item.img}" alt="${item.name}" />
+          <div class="item-details">
+            <h4>${item.name}</h4>
+            <p class="item-price">${item.price}</p>
+            <button class="remove-btn" data-index="${index}">Remove</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(div);
+      });
+
+      cartTotalDisplay.textContent = total;
+    }
+
+    cartItemsContainer.addEventListener("click", (e) => {
+      if (e.target.classList.contains("remove-btn")) {
+        const index = e.target.dataset.index;
+        cartData.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cartData));
+        renderCart();
+      }
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>

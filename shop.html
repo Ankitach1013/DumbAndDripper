@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop | Dumb & Dripper</title>
+  <link rel="stylesheet" href="shop.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="shop-header">
+    <div class="shop-navbar">
+      <div class="shop-left">
+        <a href="index.html" class="shop-logo">
+          <img src="images/dd.jpg" alt="Logo" />
+        </a>
+      </div>
+
+      <div class="shop-center">
+        <h1>Our Collection</h1>
+      </div>
+
+      <div class="shop-right">
+        <input type="text" id="searchInput" placeholder="Search..." />
+
+        <!-- Shopping Bag Icon with Cart Count -->
+        <a href="cart.html" class="bag-icon" title="Cart">
+          <i class="ri-shopping-bag-3-line"></i>
+          <span id="cart-count" class="cart-count">0</span>
+        </a>
+
+        <!-- Home Icon -->
+        <a href="index.html" class="home-icon" title="Go to Home">
+          <i class="ri-home-line"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="product-grid" id="productGrid">
+    <!-- Product cards will be injected here -->
+  </section>
+
+  <script>
+    const products = [
+      {
+        name: "Billie Eilish T-shirt",
+        price: "₹599",
+        img: "images/A1.jpg",
+        badge: "20% OFF"
+      },
+      {
+        name: "Urban T-Shirt",
+        price: "₹499",
+        img: "images/B1.jpg",
+        badge: "NEW"
+      },
+      {
+        name: "Denim Jacket",
+        price: "₹999",
+        img: "images/C1.jpg"
+      },
+      {
+        name: "Lilac Drop",
+        price: "₹749",
+        img: "images/M1.jpg"
+      },
+      {
+        name: "Graphic Oversized",
+        price: "₹649",
+        img: "images/D1.jpg",
+        badge: "HOT"
+      }
+    ];
+
+    const grid = document.getElementById("productGrid");
+    const searchInput = document.getElementById("searchInput");
+    const cartCount = document.getElementById("cart-count");
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function updateCartCount() {
+      cartCount.textContent = cart.length;
+    }
+
+    function renderProducts(list) {
+      grid.innerHTML = "";
+      list.forEach(product => {
+        const div = document.createElement("div");
+        div.className = "product-card";
+        div.innerHTML = `
+          <div class="product-image">
+            <img src="${product.img}" alt="${product.name}" />
+            ${product.badge ? `<span class="badge">${product.badge}</span>` : ""}
+          </div>
+          <div class="product-info">
+            <h3>${product.name}</h3>
+            <p>${product.price}</p>
+            <button class="add-to-cart">Add to Cart</button>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+
+      document.querySelectorAll(".add-to-cart").forEach(button => {
+        button.addEventListener("click", function () {
+          const productCard = this.closest(".product-card");
+          const name = productCard.querySelector("h3").textContent;
+          const price = productCard.querySelector("p").textContent;
+          const img = productCard.querySelector("img").src;
+
+          const product = { name, price, img };
+          cart.push(product);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          updateCartCount();
+          alert(`${name} added to cart`);
+        });
+      });
+    }
+
+    searchInput.addEventListener("input", () => {
+      const searchTerm = searchInput.value.toLowerCase();
+      const filtered = products.filter(p =>
+        p.name.toLowerCase().includes(searchTerm)
+      );
+      renderProducts(filtered);
+    });
+
+    renderProducts(products);
+    updateCartCount();
+  </script>
+</body>
+</html>

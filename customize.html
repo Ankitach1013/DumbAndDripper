@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customize Your Drip</title>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="customize.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Rubik&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <section class="customize-section">
+    <div class="overlay">
+      <h1 class="bouncy-text">Customize Your Drip</h1>
+      <div class="custom-content">
+        <div class="controls">
+          <label for="customText">Text:</label>
+          <input type="text" id="customText" placeholder="Enter your drip text" />
+
+          <label for="colorPicker">Text Color:</label>
+          <input type="color" id="colorPicker" value="#ffffff" />
+
+          <label for="fontSelect">Font:</label>
+          <select id="fontSelect">
+            <option value="Rubik">Rubik</option>
+            <option value="Playfair Display">Playfair Display</option>
+            <option value="Arial">Arial</option>
+            <option value="Courier New">Courier New</option>
+          </select>
+
+          <label for="fontSize">Font Size:</label>
+          <input type="range" id="fontSize" min="10" max="60" value="20" />
+
+          <label for="shirtColor">T-Shirt Color:</label>
+          <input type="color" id="shirtColor" value="#222222" />
+
+          <label for="uploadImage">Upload Design:</label>
+          <input type="file" id="uploadImage" accept="image/*" />
+          <button id="removeImage">Remove Design</button>
+          <button id="downloadBtn">Download Drip</button>
+        </div>
+
+        <div class="preview-area">
+          <div class="mockup" id="mockup">
+            <p id="previewText">Your Text</p>
+            <img id="uploadedImg" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-logo">
+      <img src="images/dd.jpg" alt="Dumb & Dripper Logo" />
+      <p>Dumb & Dripper © 2025. All rights reserved.</p>
+    </div>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="customize.js"></script>
+</body>
+</html>
